@@ -3,8 +3,8 @@ const AnnoucmentModel = require('../models/AnnoucmentModel')
 
 routes.post('/api/announcements', (req, res) => {
     const announcement = new AnnoucmentModel({
-        title: 'Yeah',
-        content: 'boii',
+        title: req.body.title,
+        content: req.body.content,
     })
     announcement.save()
 
