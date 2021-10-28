@@ -5,6 +5,8 @@ require('dotenv').config()
 const app = express()
 const PORT = 3000
 
+app.use(express.json())
+
 // db connection
 mongoose.connect(process.env.DB_CONNECTION, {
     useNewUrlParser: true,
