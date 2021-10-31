@@ -1,5 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const schedule = require('node-schedule')
+const AnnoucmentModel = require('./models/AnnoucmentModel')
+
 const cors = require('cors')
 require('dotenv').config()
 
@@ -25,6 +28,13 @@ mongoose.connection.on('connected', (err, res) => {
 // routes
 const routes = require('./routes/router')
 app.use(routes)
+
+//data removing every midnight
+schedule.scheduleJob('0 0 * * *', () => {
+    mongoose.AnnoucmentModel.remove({}, () => {
+        console.log('All colletion data removed')
+    })
+})
 
 app.listen(PORT, () => {
     console.log('Listerning on port:', PORT)
