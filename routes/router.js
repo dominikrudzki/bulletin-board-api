@@ -2,17 +2,21 @@ const routes = require('express').Router()
 const mongoose = require('mongoose')
 const AnnoucmentModel = require('../models/AnnoucmentModel')
 
-routes.post('/api/add-announcement', (req, res) => {
+routes.post('/api/announcements', (req, res) => {
     const announcement = new AnnoucmentModel({
         title: req.body.title,
         content: req.body.content,
     })
-    announcement.save()
 
-    res.json({ success: true })
+    if (req.body.title.trim() === '' || req.body.content.trim() === '') {
+        res.json({ success: false })
+    } else {
+        announcement.save()
+        res.json({ success: true })
+    }
 })
 
-routes.get('/api/get-announcement', async (req, res) => {
+routes.get('/api/announcements', async (req, res) => {
     const allAnnouncements = await AnnoucmentModel.find({})
     res.json(allAnnouncements)
 })
